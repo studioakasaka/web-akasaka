@@ -1,0 +1,139 @@
+/* =========================
+   INFO page base styling
+   （あなたのサイトのミニマル×静かな世界観向け）
+   ========================= */
+
+/* 全体の読みやすさを整える */
+.info-page{
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 96px 24px 120px;
+  line-height: 1.85;
+  letter-spacing: 0.01em;
+  color: rgba(56, 55, 55, 0.92);
+}
+
+/* 見出し：余白で“静けさ”を作る */
+.info-page h1{
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  letter-spacing: .14em;
+  margin: 0 0 28px;
+  font-weight: 700;
+}
+
+.info-page h2{
+  font-size: 1.05rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  margin: 56px 0 14px;
+  font-weight: 700;
+}
+
+.info-page h3{
+  font-size: .95rem;
+  letter-spacing: .12em;
+  margin: 26px 0 10px;
+  font-weight: 700;
+  opacity: .95;
+}
+
+/* 段落 */
+.info-page p{
+  margin: 0 0 14px;
+  opacity: .92;
+}
+
+/* リスト */
+.info-page ul{
+  margin: 10px 0 16px;
+  padding-left: 18px;
+}
+
+.info-page li{
+  margin: 6px 0;
+  opacity: .92;
+}
+
+/* 区切り線 */
+.info-page hr{
+  margin: 64px 0 44px;
+  border: none;
+  height: 1px;
+  background: rgba(255,255,255,.10);
+}
+
+/* リンク：派手にしない */
+.info-page a{
+  color: rgba(255,255,255,.92);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,.22);
+  transition: border-color .18s ease, opacity .18s ease;
+}
+
+.info-page a:hover{
+  border-bottom-color: rgba(255,255,255,.55);
+  opacity: .95;
+}
+
+/* “法律”ブロックを少しだけ区別（やりすぎない） */
+.info-page h2 + h3,
+.info-page hr + h2{
+  scroll-margin-top: 84px;
+}
+
+
+/* =========================
+   Footer Logo (Home link)
+   ========================= */
+
+.info-footer{
+  margin-top: 120px;
+  padding: 80px 0 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* ロゴリンク */
+.home-logo-link{
+  display: inline-block;
+  transition: transform .4s ease, opacity .3s ease;
+}
+
+/* ロゴ画像 */
+.infologo{
+  width: 48px;
+  height: auto;
+  opacity: .7;
+  transition: opacity .3s ease, transform .4s ease;
+}
+
+/* ホバー演出（静かに） */
+.home-logo-link:hover .infologo{
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* モバイル調整 */
+@media (max-width: 640px){
+  .infologo{
+    width: 38px;
+  }
+}
+
+/* 画面が狭いときの余白最適化 */
+@media (max-width: 640px){
+  .info-page{
+    padding: 72px 18px 96px;
+  }
+  .info-page h2{
+    margin-top: 44px;
+  }
+}
+
+/* 動きを苦手な人向け（念のため） */
+@media (prefers-reduced-motion: reduce){
+  .info-page a{
+    transition: none;
+  }
+}

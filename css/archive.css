@@ -1,0 +1,139 @@
+/* --- カーテン（中央から両サイドに黒がスライド消滅） --- */
+.curtain-overlay {
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  display: flex;
+}
+
+.curtain-panel {
+  flex: 1;
+  background: #111;
+  transition: transform 1.2s cubic-bezier(.8, 0, .2, 1);
+  will-change: transform;
+}
+
+.curtain-overlay.open {
+  pointer-events: none;
+}
+
+.curtain-overlay.open .curtain-panel.left {
+  transform: translateX(-100vw);
+}
+
+.curtain-overlay.open .curtain-panel.right {
+  transform: translateX(100vw);
+}
+
+/* --- ページ固有のトップバー変数（archiveは元50px） --- */
+:root {
+  --topbar-height: 54px;
+  --topbar-blur: 4px;
+  --topbar-bg: rgba(255, 255, 255, 0.35);
+}
+
+/* --- 背景画像: 最初は全画面、fixedで上帯になる --- */
+body {
+  background: #fff;
+  min-height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+  transition: 0.8s;
+  position: fixed; /* ← 現行仕様を踏襲（グリッド側でスクロール） */
+}
+
+.bg-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: url('../images/archive/archive_main.webp') center center / cover no-repeat;
+  z-index: 0;
+  pointer-events: none;
+  transition: height 1.0s cubic-bezier(.77, 0, .25, 1), box-shadow 0.5s;
+  box-shadow: none;
+}
+
+/* --- ナビ（見た目・固定は style.css の共通を使用） --- */
+.archive-menu { height: 54;/* 初期中央：共通で適用 */ }
+
+.archive-menu.fixed {height: 54; /* 上部固定：共通で適用 */ }
+
+.archive-menu .menu-item{
+  color: #ffffff;
+  text-shadow: 0 2px 8px #fff5;
+}
+
+
+.menu-item:hover {
+  color: #ffffff;
+  border-bottom: 2px solid #ededed;
+}
+
+/* --- グリッド（スクロール可、中央寄せ、正方形） --- */
+.grid-area {
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: 100vw;
+  top: 100vh;
+  bottom: 0;
+  z-index: 20;
+  overflow-y: auto;
+  transition: top 1.0s cubic-bezier(.7, .1, .3, 1), opacity 0.6s;
+  opacity: 0;
+  pointer-events: none;
+  background: none;
+}
+
+/* ※ top は style.css の [data-content-scroll].show が制御 */
+.grid-area.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.4vw;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2.2vw 0 4vw 0;
+}
+
+.grid img,
+.grid .frame {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 5px;
+  background: #23201c;
+  box-shadow: 0 2px 12px #0005;
+  object-fit: cover;
+  display: block;
+  position: relative;
+}
+
+/* 画像が無い時はプレースホルダー表示 */
+.grid img:not([src]),
+.grid img[src=""] {
+  background: repeating-linear-gradient(135deg, #2d2a25 0 16px, #39342d 16px 32px);
+  border: 2.2px dashed #8a7f61;
+  box-shadow: 0 0 0 1.7px #fff3 inset;
+  min-height: 60px;
+  content: "";
+}
+
+/* --- レスポンシブ対応 --- */
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .menu-item { font-size: 1.07rem; }
+}
+
+@media (max-width: 600px) {
+  .grid { grid-template-columns: 1fr; }
+}

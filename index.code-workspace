@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>3D Rotate Test</title>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200vh;
+      font-family: sans-serif;
+      perspective: 1000px;
+    }
+
+    .text {
+      font-size: 2rem;
+      padding: 1rem 2rem;
+      background: #333;
+      border-radius: 8px;
+      backface-visibility: visible;
+      transform-style: preserve-3d;
+      transition: transform 0.1s linear;
+    }
+  </style>
+</head>
+<body>
+  <div class="text" id="rotatingText">Rotating Text</div>
+
+  <script>
+    window.addEventListener('scroll', () => {
+      const scroll = window.scrollY;
+      const el = document.getElementById('rotatingText');
+
+      // ← 試したい方向にここを書き換える
+      el.style.transform = `rotateY(${scroll % 360}deg)`; // 横回転
+      // el.style.transform = `rotateX(${scroll % 360}deg)`; // 縦回転
+      // el.style.transform = `rotateZ(${scroll % 360}deg)`; // 傾き回転
+    });
+  </script>
