@@ -113,7 +113,9 @@ document.querySelectorAll('.carousel-item').forEach(item => {
 window.addEventListener("resize", () => {
   updateItems(window.scrollY);
 });
-
+window.addEventListener("pageshow", function () {
+  updateItems(window.scrollY);
+});
 
 const preload = new Image();
 preload.src = "images/archive/archive_main.webp";
