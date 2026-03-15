@@ -1,4 +1,12 @@
-/* ===== カーテン演出 ===== */
+/* =========================================
+   Products page
+   - カーテン演出
+   - 背景帯
+   - 商品カテゴリ
+   - Artページと同サイズのカルーセル
+========================================= */
+
+/* --- カーテン --- */
 .curtain-overlay {
   position: fixed;
   inset: 0;
@@ -21,17 +29,24 @@
   transform: translateX(100vw);
 }
 
-/* ===== ページ固有のトップバー変数（products基準） ===== */
+/* --- ページ固有のトップバー変数 --- */
 :root {
   --topbar-height: 54px;
   --topbar-blur: 4px;
   --topbar-bg: rgba(255, 255, 255, 0.35);
+
+  /* Artと統一 */
+  --work-carousel-width-desktop: min(50vw, 900px);
+  --work-carousel-width-mobile: calc(100vw - 16px);
+  --work-carousel-ratio-desktop: 5 / 4;
+  --work-carousel-ratio-mobile: 4 / 3;
 }
 
-/* ===== 初期状態：全画面背景、クリック後：上部バンド ===== */
+/* --- ベース --- */
 body {
-  background: #fff;
   margin: 0;
+  background: #fff;
+  overflow-x: hidden;
 }
 
 .bg-image {
@@ -45,28 +60,12 @@ body {
   pointer-events: none;
 }
 
-/* ===== ナビ（中央→上固定） ※見た目は style.css に統一済み ===== */
-.products-menu { /* 中央時：共通で制御 */
-}
-.products-menu.fixed { /* 上部固定時：共通で制御 */
-}
+/* bg-image.fixed は style.css 側を利用 */
 
-.menu-item {
-  color: #111;              /* 固定後の文字色（共通でも定義済み） */
-  text-decoration: none;
-  font-family: 'Montserrat','Helvetica Neue',Arial,sans-serif;
-  letter-spacing: .12em;
-  font-size: .9rem;
-  padding: .35em .7em;
-  line-height: 1.2;
-  border-radius: 8px;
-  transition: color .16s, background .16s, border-color .16s;
-  border-bottom: 2px solid transparent;
-}
-
+/* --- 初期メニュー色 --- */
 .products-menu:not(.fixed) .menu-item {
   color: #f0eff0;
-  text-shadow: 0 2px 10px rgba(0,0,0,.6);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, .6);
 }
 
 .menu-item:hover {
@@ -83,7 +82,7 @@ body {
   display: block;
 }
 
-/* ===== コンテンツ（表示/非表示、スクロール） ===== */
+/* --- コンテンツ領域 --- */
 .products-area {
   position: fixed;
   left: 0;
@@ -98,16 +97,16 @@ body {
   background: linear-gradient(#ffffff, #f9f9f7);
 }
 
-/* ※ top は style.css の [data-content-scroll].show が制御 */
 .products-area.show {
   opacity: 1;
   pointer-events: auto;
 }
 
-/* ===== セクション ===== */
+/* --- セクション --- */
 .category-section {
-  max-width: 800px;
-  margin: 0 auto;
+  max-width: 900px;
+  margin: 0 auto 64px;
+  padding: 0 12px;
 }
 
 .cat-title {
@@ -122,23 +121,20 @@ body {
   font-size: .95rem;
 }
 
-/* ===== products-carousel（art仕様互換） ===== */
-/* ===== products-carousel（artと同じサイズ感に統一） ===== */
+/* --- カルーセル（Artと同サイズに統一） --- */
 .products-carousel {
   position: relative;
-  width: 50vw;
-  margin: 0 auto 16px auto;   /* 中央寄せ＋下に少し余白 */
-  display: flex;
-  align-items: center;
+  width: var(--work-carousel-width-desktop);
+  margin: 0 auto 16px;
   overflow: hidden;
 }
 
 .products-carousel-track {
   display: flex;
-  transition: transform 0.6s ease;
-  width: 50vw;
-  max-width: 900px;
-  aspect-ratio: 5 / 4;
+  width: 100%;
+  aspect-ratio: var(--work-carousel-ratio-desktop);
+  transition: transform .4s ease;
+  touch-action: pan-y;
 }
 
 .products-carousel-track picture {
@@ -149,27 +145,27 @@ body {
 }
 
 .products-carousel-track picture img {
-  width: 50vw;
-  max-width: 900px;
-  aspect-ratio: 5 / 4;
-  object-fit: cover;
+  width: 100%;
+  height: 100%;
   display: block;
-  background: #222;
+  aspect-ratio: var(--work-carousel-ratio-desktop);
+  object-fit: cover;
+  background: #23201c;
 }
 
-/* ナビボタン */
 .products-carousel-btn {
-  background: none;
-  border: none;
-  font-size: 2rem;
-  color: #2f2a1f;
-  cursor: pointer;
-  user-select: none;
-  z-index: 100;
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  padding: 0 8px;
+  z-index: 20;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 2rem;
+  line-height: 1;
+  color: #a38c54;
+  cursor: pointer;
+  user-select: none;
 }
 
 .products-carousel-prev {
@@ -180,39 +176,13 @@ body {
   right: 10px;
 }
 
-.products-menu:not(.fixed) ~ .products-area .products-carousel-btn {
-  color: #6b5a30;
+/* --- テキスト --- */
+.category-section article p {
+  line-height: 1.85;
+  letter-spacing: .02em;
 }
 
-
-/* ナビボタン */
-.products-carousel-btn {
-  background: none;
-  border: none;
-  font-size: 2rem;
-  color: #bababa;
-  cursor: pointer;
-  user-select: none;
-  z-index: 100;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  padding: 0 8px;
-}
-
-.products-carousel-prev {
-  left: 10px;
-}
-
-.products-carousel-next {
-  right: 10px;
-}
-
-.products-menu:not(.fixed) ~ .products-area .products-carousel-btn {
-  color: #d0d0d0;
-}
-
-/* ===== 商品グリッド ===== */
+/* --- 商品グリッド --- */
 .product-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -244,14 +214,40 @@ body {
   background: repeating-linear-gradient(135deg, #f1f1ef 0 12px, #e6e4df 12px 24px);
 }
 
-/* ===== レスポンシブ ===== */
+/* --- レスポンシブ --- */
 @media (max-width: 980px) {
   .product-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+@media (max-width: 768px) {
+  .products-carousel {
+    width: var(--work-carousel-width-mobile);
+    margin: 0 auto 12px;
+  }
 
   .products-carousel-track {
-    height: min(48vh, 420px);
+    width: 100%;
+    aspect-ratio: var(--work-carousel-ratio-mobile);
+    transition: transform .35s ease;
+  }
+
+  .products-carousel-track picture img {
+    aspect-ratio: var(--work-carousel-ratio-mobile);
+    object-fit: cover;
+  }
+
+  .products-carousel-btn {
+    font-size: 1.5rem;
+  }
+
+  .products-carousel-prev {
+    left: 6px;
+  }
+
+  .products-carousel-next {
+    right: 6px;
   }
 }
 
@@ -262,5 +258,9 @@ body {
 
   .cat-title {
     font-size: 1.3rem;
+  }
+
+  .category-section {
+    padding: 0 8px;
   }
 }

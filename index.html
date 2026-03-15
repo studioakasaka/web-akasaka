@@ -11,19 +11,41 @@
   <meta property="og:url" content="https://akasaka.studio">
 
 
-  <title>Jewelry studio AKASAKA</title>
+  <title>Jewelry Studio AKASAKA</title>
   <link rel="stylesheet" href="css/style.css">
   <link rel="preload" href="images/archive/archive_main.webp" as="image">
   <link rel="preload" href="images/art/art_main.webp" as="image">
 </head>
 <body>
-  <h1 class="main-title">Jewelry Studio <br>AKASAKA</h1>
+  
+<main class="home">
+  <section class="info-panel" aria-label="Studio information">
+    <h1 class="info-title">Studio AKASAKA</h1>
+    <p class="info-tagline">Objects for the hand.</p>
 
+    <p class="info-note"><a href="/pages/info.html#contact">By appointment.</a></p>
+
+    <div class="info-open">
+      <p class="info-open-label">Open once a month</p>
+
+      <div class="info-open-date">
+        <span>28 02 2026</span>
+        <span class="dot">·</span>
+        <span>14:00—17:00</span>
+      </div>
+    </div>
+
+    <address class="info-address">
+      <span>Frankfurter Allee 6</span><br>
+      <span>10247 Berlin</span>
+    </address>
+  </section>
+</main>
 
   <div class="carousel-container">
     <div class="carousel" id="carousel">
       <div class="center-point"></div>
-      <div class="center-logo" aria-hidden="true">Jewelry Studio<br>AKASAKA</div>
+      <div class="center-logo" aria-hidden="true">Jewelry Studio AKASAKA</div>
       <!-- ここで各ページ名＆リンク先を統一 -->
       <a href="pages/art.html"      class="carousel-item" id="item1">Art</a>
       <a href="pages/archive.html"  class="carousel-item" id="item5">Archive</a>
@@ -39,7 +61,11 @@
    <div class="keyhole-box" id="keyholeBox">
     <button class="keyhole" id="keyholeBtn" aria-label="Open secret page"></button>
   <input class="keyword-input" id="keywordInput" type="password" placeholder="Secret keyword" autocomplete="off" style="display:none;">
-</div>
+</div>   
+
+
   <script src="js/script.js"></script>
+
+  
 </body>
 </html>
