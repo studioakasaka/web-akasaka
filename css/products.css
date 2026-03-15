@@ -264,3 +264,38 @@ body {
     padding: 0 8px;
   }
 }
+@media (max-width: 768px) {
+  .products-menu.fixed {
+    min-height: 56px;
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+
+  .products-menu.fixed .menu-item {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 40px;
+    padding: 8px 10px;
+    font-size: 0.98rem;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .products-menu.fixed .back-home {
+    padding: 0 6px;
+  }
+
+  .products-menu.fixed .back-icon,
+  .products-menu.fixed img {
+    height: 28px;
+    width: auto;
+    display: block;
+  }
+}
