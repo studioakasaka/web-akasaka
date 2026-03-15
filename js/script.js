@@ -101,11 +101,17 @@ document.addEventListener('click', function(e){
 document.querySelectorAll('.carousel-item').forEach(item => {
   item.addEventListener('click', function(e){
     e.preventDefault();
-    document.querySelector('.carousel-container').classList.add('slide-out-up');
+
+    const container = document.querySelector('.carousel-container');
     const link = this.getAttribute('href');
+
+    if (container) {
+      container.classList.add('slide-out-up');
+    }
+
     setTimeout(() => {
       window.location.href = link;
-    }, 850); // アニメーションが終わるタイミングで遷移
+    }, 850);
   });
 });
 
@@ -114,6 +120,25 @@ window.addEventListener("resize", () => {
   updateItems(window.scrollY);
 });
 window.addEventListener("pageshow", function () {
+  updateItems(window.scrollY);
+});
+
+window.addEventListener("pageshow", function () {
+  const container = document.querySelector(".carousel-container");
+
+  if (container) {
+    container.classList.remove("slide-out-up");
+    container.style.opacity = "";
+    container.style.visibility = "";
+    container.style.transform = "";
+  }
+
+  items.forEach(item => {
+    if (!item) return;
+    item.style.opacity = "";
+    item.style.visibility = "";
+  });
+
   updateItems(window.scrollY);
 });
 
