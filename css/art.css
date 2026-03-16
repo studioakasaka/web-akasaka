@@ -307,66 +307,34 @@ body {
    ART top fixed nav - mobile
 ========================= */
 
-@media (max-width: 768px) {
-  .art-menu.fixed {
-    min-height: 54px;
-    padding: 8px 10px;
-    gap: 10px;
-  }
 
-  .art-menu.fixed .menu-item {
-    font-size: 0.95rem;
-    line-height: 1;
-    padding: 10px 8px;
-    min-height: 40px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    letter-spacing: 0.04em;
-  }
+/* MOBILE NAV ADJUSTMENT */
+@media (max-width:768px){
 
-  .art-menu.fixed .logo_backhome_art img,
-  .art-menu.fixed .back-icon {
-    height: 28px;
-    width: auto;
-  }
+.art-menu.fixed,
+.archive-menu.fixed,
+.products-menu.fixed{
+  min-height:56px;
+  padding:6px 10px;
+  gap:8px;
 }
 
-@media (max-width: 768px) {
-  .art-menu.fixed {
-    min-height: 56px;
-    padding: 8px 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-  }
+.art-menu.fixed .menu-item,
+.archive-menu.fixed .menu-item,
+.products-menu.fixed .menu-item{
+  min-height:40px;
+  padding:8px 8px;
+  font-size:0.9rem;
+  line-height:1;
+  letter-spacing:0.04em;
+  white-space:nowrap;
+}
 
-  .art-menu.fixed .menu-item {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 40px;
-    padding: 8px 10px;
-    font-size: 0.98rem;
-    line-height: 1;
-    letter-spacing: 0.04em;
-    white-space: nowrap;
-  }
+.art-menu.fixed img,
+.archive-menu.fixed img,
+.products-menu.fixed img{
+  height:26px;
+  width:auto;
+}
 
-  .art-menu.fixed .open-btn {
-    min-height: 40px;
-    padding: 8px 14px;
-    font-size: 0.98rem;
-    letter-spacing: 0.12em;
-  }
-
-  .art-menu.fixed .back-icon,
-  .art-menu.fixed img {
-    height: 28px;
-    width: auto;
-    display: block;
-  }
 }
