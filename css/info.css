@@ -66,12 +66,12 @@
 .info-page a{
   color: rgba(33, 33, 33, 0.92);
   text-decoration: none;
-  border-bottom: 1px solid rgba(255,255,255,.22);
+  border-bottom: 1px solid rgba(33,33,33,.22);
   transition: border-color .18s ease, opacity .18s ease;
 }
 
 .info-page a:hover{
-  border-bottom-color: rgba(255,255,255,.55);
+  border-bottom-color: rgba(33,33,33,.55);
   opacity: .95;
 }
 

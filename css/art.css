@@ -72,7 +72,9 @@ body {
 
 .art-menu  {
   opacity: .95;
-  border-bottom: 2px solid rgba(255, 255, 255, .65);
+  border: 0 !important;
+  border-bottom: 0 !important;
+  box-shadow: none;
 }
 
 /* --- メインコンテンツ領域 --- */
@@ -116,6 +118,15 @@ body {
   letter-spacing: var(--work-h1-letter, 0);
   font-weight: 600;
   margin: 10px 0 30px;
+  border: 0 !important;
+  text-decoration: none !important;
+  box-shadow: none !important;
+}
+
+.art-title::before,
+.art-title::after {
+  content: none !important;
+  display: none !important;
 }
 
 .art-item {

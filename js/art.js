@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded', function () {
     if (!document.body.contains(openBtn)) return;
 
     openBtn.outerHTML =
-      '<a class="menu-item logo_backhome_art" href="../index.html" aria-label="Back to Home">' +
-        '<img src="../images/home/centerlogo.png" alt="Back to Home" style="height:32px; width:auto; vertical-align:middle;">' +
+      '<a class="menu-item back-home" href="../index.html" aria-label="Back to Home">' +
+        '<img src="../images/home/centerlogo.png" alt="" class="back-icon">' +
       '</a>';
   }
 

@@ -68,12 +68,8 @@ body {
   text-shadow: 0 2px 10px rgba(0, 0, 0, .6);
 }
 
-.menu-item:hover {
+.products-menu .menu-item:hover {
   border-bottom-color: #222;
-}
-
-.menu-item.back-home {
-  padding: 0 .3rem;
 }
 
 .back-icon {
@@ -119,6 +115,12 @@ body {
 .cat-note {
   opacity: .7;
   font-size: .95rem;
+}
+
+.product-note {
+  margin-top: 20px;
+  color: rgba(0, 0, 0, .56);
+  font-size: .88rem;
 }
 
 /* --- カルーセル（Artと同サイズに統一） --- */

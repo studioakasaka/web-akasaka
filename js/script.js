@@ -78,9 +78,7 @@ keywordInput.addEventListener('keydown', function(e) {
   if (e.key === 'Enter') {
     const val = this.value.trim().toLowerCase();
     if (val === "magic") {
-      window.location.href = "pages/secret1.html";
-    } else if (val === "stone") {
-      window.location.href = "pages/secret2.html";
+      window.location.href = "pages/secret/secret1.html";
     } else {
       alert("キーワードが違います");
       this.value = "";

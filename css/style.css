@@ -306,6 +306,7 @@ font-size: clamp(12px, 1.1vw, 16px);
   --menu-text-shadow: 0 2px 10px rgba(0,0,0,.55);
   --menu-underline-hover: rgba(0,0,0,.65);
   --content-offset-extra: 0px;
+  --menu-logo-size: 22px;
 }
 
 /* 中央配置（初期） */
@@ -386,8 +387,68 @@ font-size: clamp(12px, 1.1vw, 16px);
 }
 
 /* 戻るアイコンの微調整（該当ページのみ） */
-.menu-item.back-home { padding: 0 .3rem; }
-.back-icon { height: 28px; width: auto; display: block; }
+.products-menu .menu-item.back-home,
+.art-menu .menu-item.back-home,
+.archive-menu .menu-item.back-home {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--menu-logo-size) + 16px);
+  height: calc(var(--menu-logo-size) + 16px);
+  padding: 0 !important;
+  line-height: 1;
+  border-bottom: 0 !important;
+}
+
+.products-menu .menu-item.back-home:hover,
+.art-menu .menu-item.back-home:hover,
+.archive-menu .menu-item.back-home:hover {
+  border-bottom-color: transparent !important;
+}
+
+.products-menu .back-icon,
+.art-menu .back-icon,
+.archive-menu .back-icon,
+.products-menu .menu-item.back-home img,
+.art-menu .menu-item.back-home img,
+.archive-menu .menu-item.back-home img {
+  display: block;
+  height: var(--menu-logo-size) !important;
+  min-height: 0 !important;
+  width: auto !important;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --menu-logo-size: 20px;
+  }
+
+  .products-menu.fixed,
+  .art-menu.fixed,
+  .archive-menu.fixed {
+    height: var(--topbar-height) !important;
+    min-height: var(--topbar-height) !important;
+    padding: 0 .8rem !important;
+    gap: 8px !important;
+  }
+
+  .products-menu.fixed .menu-item,
+  .art-menu.fixed .menu-item,
+  .archive-menu.fixed .menu-item {
+    height: auto !important;
+    min-height: 0 !important;
+    padding: .32em .55em !important;
+    line-height: 1.2 !important;
+  }
+
+  .products-menu.fixed .menu-item.back-home,
+  .art-menu.fixed .menu-item.back-home,
+  .archive-menu.fixed .menu-item.back-home {
+    width: calc(var(--menu-logo-size) + 14px) !important;
+    height: calc(var(--menu-logo-size) + 14px) !important;
+    padding: 0 !important;
+  }
+}
 
 /* 背景バンド（各ページ .bg-image.fixed が参照） */
 .bg-image.fixed{
