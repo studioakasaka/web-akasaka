@@ -142,5 +142,34 @@ window.addEventListener("pageshow", function () {
   updateItems(window.scrollY);
 });
 
+
+
+const openDates = [
+  "2026-05-30",
+  "2026-06-27",
+  "2026-07-25",
+  "2026-08-29",
+  "2026-09-26",
+  "2026-10-24",
+  "2026-11-28",
+  "2026-12-12",
+
+
+];
+
+const today = new Date();
+
+const nextDate = openDates
+  .map(date => new Date(date))
+  .find(date => date >= today);
+
+if (nextDate) {
+  document.getElementById("next-open").textContent =
+    nextDate.toLocaleDateString("de-DE", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric"
+    });
+}
 const preload = new Image();
 preload.src = "images/archive/archive_main.webp";
