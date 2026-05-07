@@ -225,11 +225,11 @@ font-size: clamp(12px, 1.1vw, 16px);
 
 /* 鍵穴アイコン */
 .keyhole {
-  width: 35px;
-  height: 44px;
+  width: 58px;
+  height: 74px;
   border: 0;
   background:
-    radial-gradient(circle at 50% 30%, rgba(255,255,255,.22) 0 6px, transparent 14px),
+    radial-gradient(circle at 50% 30%, rgba(255,255,255,.22) 0 10px, transparent 23px),
     radial-gradient(ellipse at 50% 42%, rgba(255,255,255,.28) 0, rgba(255,255,255,.08) 28%, transparent 62%);
   position: relative;
   cursor: pointer;
@@ -258,16 +258,16 @@ font-size: clamp(12px, 1.1vw, 16px);
 }
 
 .keyhole:before {
-  top: 6px;
-  width: 15px;
-  height: 15px;
+  top: 10px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
 }
 
 .keyhole:after {
-  top: 20px;
-  width: 10px;
-  height: 19px;
+  top: 33px;
+  width: 16px;
+  height: 31px;
   clip-path: polygon(24% 0, 76% 0, 100% 100%, 0 100%);
 }
 

@@ -224,31 +224,6 @@ document.addEventListener('DOMContentLoaded', function () {
       if (e.target === lightbox) closeLightbox();
     });
 
-    let lightboxSwipeStartX = 0;
-    let lightboxSwipeStartY = 0;
-    let lightboxSwipeActive = false;
-
-    lightbox.addEventListener('touchstart', function (e) {
-      if (lightbox.hidden || e.target.closest('.product-lightbox-btn')) return;
-      const t = e.changedTouches[0];
-      lightboxSwipeStartX = t.clientX;
-      lightboxSwipeStartY = t.clientY;
-      lightboxSwipeActive = true;
-    }, { passive: true });
-
-    lightbox.addEventListener('touchend', function (e) {
-      if (!lightboxSwipeActive || lightbox.hidden) return;
-      const t = e.changedTouches[0];
-      const deltaX = t.clientX - lightboxSwipeStartX;
-      const deltaY = t.clientY - lightboxSwipeStartY;
-      lightboxSwipeActive = false;
-
-      if (Math.abs(deltaX) < 42 || Math.abs(deltaX) < Math.abs(deltaY) * 1.2) return;
-
-      if (deltaX < 0) showNext();
-      else showPrev();
-    }, { passive: true });
-
     document.addEventListener('keydown', function (e) {
       if (lightbox.hidden) return;
       if (e.key === 'Escape') closeLightbox();

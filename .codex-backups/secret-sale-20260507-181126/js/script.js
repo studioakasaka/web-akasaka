@@ -77,18 +77,7 @@ keyholeBtn.addEventListener('keydown', function(e) {
 keywordInput.addEventListener('keydown', function(e) {
   if (e.key === 'Enter') {
     const val = this.value.trim().toLowerCase();
-    const secretKeyword = (
-      window.STUDIO_SECRET_SALE &&
-      window.STUDIO_SECRET_SALE.keyword
-    ) ? window.STUDIO_SECRET_SALE.keyword.toLowerCase() : "magic";
-
-    if (val === secretKeyword) {
-      const releaseId = (
-        window.STUDIO_SECRET_SALE &&
-        window.STUDIO_SECRET_SALE.releaseId
-      ) ? window.STUDIO_SECRET_SALE.releaseId : "secret";
-
-      sessionStorage.setItem("studio_secret_access:" + releaseId, "1");
+    if (val === "magic") {
       window.location.href = "pages/secret/secret1.html";
     } else {
       alert("キーワードが違います");
