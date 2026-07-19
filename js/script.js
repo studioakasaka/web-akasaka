@@ -182,3 +182,12 @@ if (nextDate) {
 }
 const preload = new Image();
 preload.src = "images/archive/archive_main.webp";
+
+history.scrollRestoration = "manual";
+
+window.addEventListener("load", () => {
+  const maxScroll =
+    document.documentElement.scrollHeight - window.innerHeight;
+
+  window.scrollTo(0, maxScroll / 2);
+});
