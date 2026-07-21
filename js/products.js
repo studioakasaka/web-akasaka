@@ -175,7 +175,10 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function openLightbox(card) {
-      gallery = (card.getAttribute('data-gallery') || '')
+      const galleryAttribute = window.matchMedia('(max-width: 768px)').matches
+        ? 'data-gallery-mobile'
+        : 'data-gallery';
+      gallery = (card.getAttribute(galleryAttribute) || card.getAttribute('data-gallery') || '')
         .split('|')
         .map(function (src) { return src.trim(); })
         .filter(Boolean);
