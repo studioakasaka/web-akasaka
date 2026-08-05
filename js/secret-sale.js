@@ -1,180 +1,179 @@
 (function () {
-  const config = window.STUDIO_SECRET_SALE || {};
-  const releaseId = config.releaseId || "secret";
-  const storageKey = "studio_secret_access:" + releaseId;
-  const startsAt = new Date(config.startsAt || Date.now());
-  const endsAt = new Date(startsAt.getTime() + (Number(config.durationHours || 36) * 60 * 60 * 1000));
+  "use strict";
 
-  const lock = document.querySelector("[data-secret-lock]");
-  const sale = document.querySelector("[data-secret-sale]");
-  const lockForm = document.querySelector("[data-secret-form]");
-  const lockInput = document.querySelector("[data-secret-input]");
-  const lockError = document.querySelector("[data-secret-error]");
-  const countdown = document.querySelector("[data-secret-countdown]");
-  const windowText = document.querySelector("[data-secret-window]");
+  var config = window.STUDIO_SECRET_SALE || {};
+  var gate = document.querySelector("[data-secret-gate]");
+  var page = document.querySelector("[data-secret-page]");
+  var form = document.querySelector("[data-secret-form]");
+  var input = document.querySelector("[data-secret-input]");
+  var message = document.querySelector("[data-secret-message]");
 
-  function isUnlocked() {
-    return sessionStorage.getItem(storageKey) === "1";
+  var releaseId = config.releaseId || "private-sale";
+  var accessKey = "studio_secret_access:" + releaseId;
+
+  function parseDate(value) {
+    var date = value ? new Date(value) : null;
+    return date && !Number.isNaN(date.getTime()) ? date : null;
   }
 
-  function unlock() {
-    sessionStorage.setItem(storageKey, "1");
-    showSale();
+  var startsAt = parseDate(config.startsAt);
+  var endsAt = parseDate(config.endsAt);
+
+  function releaseState() {
+    var now = new Date();
+    if (startsAt && now < startsAt) return "before";
+    if (endsAt && now > endsAt) return "after";
+    return "open";
   }
 
   function formatDate(date) {
-    return date.toLocaleString("de-DE", {
-      day: "2-digit",
-      month: "2-digit",
+    if (!date) return "";
+    return new Intl.DateTimeFormat("en-GB", {
+      day: "numeric",
+      month: "long",
       year: "numeric",
       hour: "2-digit",
-      minute: "2-digit"
+      minute: "2-digit",
+      timeZone: "Europe/Berlin",
+      timeZoneName: "short"
+    }).format(date);
+  }
+
+  function updatePageContent() {
+    var title = document.querySelector("[data-sale-title]");
+    var subtitle = document.querySelector("[data-sale-subtitle]");
+    var period = document.querySelector("[data-sale-period]");
+    var email = config.contactEmail || "info@akasaka.studio";
+
+    document.title = (config.title || "Private Sale") + " — Studio AKASAKA";
+    if (title) title.textContent = config.title || "Private Sale";
+    if (subtitle) subtitle.textContent = config.subtitle || "";
+
+    if (period) {
+      if (startsAt && endsAt) {
+        period.textContent = "Available from " + formatDate(startsAt) + " until " + formatDate(endsAt) + ".";
+      } else if (endsAt) {
+        period.textContent = "Available until " + formatDate(endsAt) + ".";
+      }
+    }
+
+    document.querySelectorAll("[data-contact-email]").forEach(function (link) {
+      link.textContent = email;
+      link.href = "mailto:" + email;
     });
-  }
 
-  function isBeforeStart(now) {
-    return now < startsAt;
-  }
-
-  function isExpired(now) {
-    return now > endsAt;
-  }
-
-  function isOpen(now) {
-    return !isBeforeStart(now) && !isExpired(now);
-  }
-
-  function updateLockAvailability() {
-    const now = new Date();
-    if (!lockForm) return;
-
-    if (isBeforeStart(now)) {
-      lockForm.classList.add("is-hidden");
-      if (lockError) lockError.textContent = "This preview has not opened yet.";
-      return;
+    var instagram = document.querySelector("[data-contact-instagram]");
+    if (instagram) {
+      instagram.textContent = config.instagramAccount || "@akasaka_jewelry";
+      instagram.href = config.instagramUrl || "https://www.instagram.com/akasaka_jewelry/";
     }
+  }
 
-    if (isExpired(now)) {
-      lockForm.classList.add("is-hidden");
-      if (lockError) lockError.textContent = "This preview has closed.";
-      return;
+  function showPage() {
+    gate.classList.add("is-hidden");
+    page.classList.remove("is-hidden");
+  }
+
+  function showGateMessage(text) {
+    if (message) message.textContent = text;
+  }
+
+  function validateRelease() {
+    var state = releaseState();
+    if (state === "before") {
+      showGateMessage("This private sale has not opened yet.");
+      return false;
     }
-
-    lockForm.classList.remove("is-hidden");
-    if (lockError) lockError.textContent = "";
-  }
-
-  function renderCountdown() {
-    if (!countdown) return;
-    const now = new Date();
-    if (isBeforeStart(now)) {
-      countdown.textContent = "not open yet";
-      showLock();
-      return;
+    if (state === "after") {
+      showGateMessage("This private sale has ended.");
+      sessionStorage.removeItem(accessKey);
+      return false;
     }
-    if (isExpired(now)) {
-      countdown.textContent = "closed";
-      document.body.classList.add("secret-expired");
-      showLock();
-      return;
-    }
-    const diff = endsAt.getTime() - now.getTime();
-    const hours = Math.floor(diff / 3600000);
-    const minutes = Math.floor((diff % 3600000) / 60000);
-    countdown.textContent = String(hours).padStart(2, "0") + "h " + String(minutes).padStart(2, "0") + "m";
+    return true;
   }
 
-  function showSale() {
-    if (lock) lock.classList.add("is-hidden");
-    if (sale) sale.classList.remove("is-hidden");
-    renderCountdown();
+  updatePageContent();
+
+  if (sessionStorage.getItem(accessKey) === "1" && validateRelease()) {
+    showPage();
   }
 
-  function showLock() {
-    if (lock) lock.classList.remove("is-hidden");
-    if (sale) sale.classList.add("is-hidden");
-    updateLockAvailability();
-  }
-
-  if (windowText) {
-    windowText.textContent = "Open from " + formatDate(startsAt) + " to " + formatDate(endsAt) + ".";
-  }
-
-  if (lockForm) {
-    lockForm.addEventListener("submit", function (event) {
+  if (form) {
+    form.addEventListener("submit", function (event) {
       event.preventDefault();
-      const keyword = String(config.keyword || "").trim().toLowerCase();
-      const value = String(lockInput?.value || "").trim().toLowerCase();
-      const now = new Date();
+      if (!validateRelease()) return;
 
-      if (isBeforeStart(now)) {
-        if (lockError) lockError.textContent = "This preview has not opened yet.";
-        return;
-      }
-      if (isExpired(now)) {
-        if (lockError) lockError.textContent = "This preview has closed.";
-        return;
-      }
-      if (value && value === keyword) {
-        unlock();
-      } else if (lockError) {
-        lockError.textContent = "Keyword does not match.";
+      var submitted = input.value.trim();
+      if (submitted === String(config.keyword || "")) {
+        sessionStorage.setItem(accessKey, "1");
+        showGateMessage("");
+        showPage();
+      } else {
+        showGateMessage("The keyword is not correct.");
+        input.value = "";
+        input.focus();
       }
     });
   }
 
-  if (isUnlocked() && isOpen(new Date())) showSale();
-  else showLock();
+  document.querySelectorAll("[data-purchase-link]").forEach(function (link) {
+    var product = link.closest("[data-product]");
+    var number = product ? product.getAttribute("data-product") : "";
+    var email = config.contactEmail || "info@akasaka.studio";
+    var subject = "Purchase enquiry — Product " + number;
+    var body = [
+      "Hello Studio AKASAKA,",
+      "",
+      "I am interested in Product " + number + ".",
+      "Please let me know whether it is still available.",
+      "",
+      "Name:",
+      "Country / delivery location:",
+      "Studio collection or shipping:",
+      ""
+    ].join("\n");
 
-  renderCountdown();
-  window.setInterval(renderCountdown, 30000);
+    link.href = "mailto:" + email +
+      "?subject=" + encodeURIComponent(subject) +
+      "&body=" + encodeURIComponent(body);
+  });
 
-  document.querySelectorAll(".secret-item").forEach(function (item) {
-    const track = item.querySelector(".secret-track");
-    const slides = Array.from(item.querySelectorAll(".secret-slide"));
-    const prev = item.querySelector(".secret-prev");
-    const next = item.querySelector(".secret-next");
-    if (!track || slides.length < 2) return;
+  document.querySelectorAll("[data-gallery]").forEach(function (gallery) {
+    var track = gallery.querySelector("[data-gallery-track]");
+    var slides = track ? Array.from(track.children) : [];
+    var prev = gallery.querySelector("[data-gallery-prev]");
+    var next = gallery.querySelector("[data-gallery-next]");
+    var count = gallery.querySelector("[data-gallery-count]");
+    var index = 0;
+    var startX = null;
 
-    let index = 0;
     function render() {
-      track.style.transform = "translateX(-" + (index * 100) + "%)";
+      if (!track || !slides.length) return;
+      track.style.transform = "translateX(" + (-index * 100) + "%)";
+      if (count) count.textContent = (index + 1) + " / " + slides.length;
     }
-    prev?.addEventListener("click", function () {
-      index = (index - 1 + slides.length) % slides.length;
+
+    function move(delta) {
+      index = (index + delta + slides.length) % slides.length;
       render();
-    });
-    next?.addEventListener("click", function () {
-      index = (index + 1) % slides.length;
-      render();
-    });
+    }
 
-    let swipeStartX = 0;
-    let swipeStartY = 0;
-    let isSwiping = false;
+    if (prev) prev.addEventListener("click", function () { move(-1); });
+    if (next) next.addEventListener("click", function () { move(1); });
 
-    track.addEventListener("touchstart", function (event) {
-      const touch = event.touches[0];
-      swipeStartX = touch.clientX;
-      swipeStartY = touch.clientY;
-      isSwiping = true;
-    }, { passive: true });
+    if (track) {
+      track.addEventListener("pointerdown", function (event) {
+        startX = event.clientX;
+      });
+      track.addEventListener("pointerup", function (event) {
+        if (startX === null) return;
+        var distance = event.clientX - startX;
+        startX = null;
+        if (Math.abs(distance) > 45) move(distance > 0 ? -1 : 1);
+      });
+      track.addEventListener("pointercancel", function () { startX = null; });
+    }
 
-    track.addEventListener("touchend", function (event) {
-      if (!isSwiping) return;
-      const touch = event.changedTouches[0];
-      const deltaX = touch.clientX - swipeStartX;
-      const deltaY = touch.clientY - swipeStartY;
-      isSwiping = false;
-
-      if (Math.abs(deltaX) < 42 || Math.abs(deltaX) < Math.abs(deltaY) * 1.2) return;
-
-      if (deltaX < 0) {
-        index = (index + 1) % slides.length;
-      } else {
-        index = (index - 1 + slides.length) % slides.length;
-      }
-      render();
-    });
+    render();
   });
 })();
