@@ -75,10 +75,31 @@
   opacity: .95;
 }
 
-/* “法律”ブロックを少しだけ区別（やりすぎない） */
-.info-page h2 + h3,
-.info-page hr + h2{
-  scroll-margin-top: 84px;
+/* 法律ブロック：折りたたみ */
+.legal-details {
+  margin-top: 44px;
+}
+.legal-details summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+.legal-details summary::-webkit-details-marker {
+  display: none;
+}
+.legal-details summary h2 {
+  margin: 0;
+}
+.legal-details summary::after {
+  content: "▸";
+  margin-left: 8px;
+  font-size: .75rem;
+  opacity: .4;
+  transition: transform .25s ease;
+}
+.legal-details[open] summary::after {
+  transform: rotate(90deg);
 }
 
 
